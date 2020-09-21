@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/madslun/Documents/Programmering/AlgDat/Oblig2/C/main.c
+stdio.h
+-
+stdlib.h
+-
+time.h
+-
+assert.h
+-
+
