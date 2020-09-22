@@ -15,18 +15,24 @@ private:
 
 private:
     unsigned long keyGen(string name) {
-        unsigned long sum = 0;
+        unsigned long sum = 1;
         for(char i : name) {
             sum += sum * 7 + (i*7);
         }
-        return sum % size;
-        //return sum * A >> (32 - 7);
+        //cout << "Hash: " << sum;
+
+        return multHash(sum, 7);
     }
 
+    unsigned long multHash(unsigned sum, int x){
+        const std::uint32_t knuth = 2654435769;
+        return sum * knuth >> (32-x);
+    }
 
 public:
     void insertName(string name) {
         unsigned long hash = keyGen(name);
+        //cout << " | Pos: " << hash << "| Name: " << name << endl;
         hashTable[hash].push_back(name);
     }
 
