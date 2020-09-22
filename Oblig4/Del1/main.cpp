@@ -30,24 +30,50 @@ private:
     }
 
 public:
+    //Inserts a new name in the list based on position returned from keygen
     void insertName(string name) {
-        unsigned long hash = keyGen(name);
-        //cout << " | Pos: " << hash << "| Name: " << name << endl;
-        hashTable[hash].push_back(name);
+        unsigned long pos = keyGen(name);
+        if(hashTable[pos].size() > 0) {
+            //Prints collision during insertion
+            cout << "Collision on place " << pos << ". " << name << " will be put after " << hashTable[pos].back() << endl;
+        }
+        //cout << " | Pos: " << pos << "| Name: " << name << endl;
+        hashTable[pos].push_back(name);
     }
 
 
     void listAll() {
+        //Count number of collisions
+        int count = 0;
         //Loops through all places on list
         for(int i = 0; i < size; i++) {
             cout << "Place " << i << ":";
+            //Counts number of collisions
+            if(hashTable[i].size() > 0) {
+                count += hashTable[i].size()-1;
+            }
             //Loops through if there are several names on same spot.
             for(string j : hashTable[i]) {
                 cout << "--> " << j;
             }
             cout << endl;
         }
+        cout << "Number of collisions: " << count << endl;
     }
+
+
+    bool findName(string name) {
+        unsigned long namePos = keyGen(name);
+        for(string i : hashTable[namePos]) {
+            if(name == i) {
+                cout << name << " is located at " << namePos << " in the list" << endl;
+                return true;
+            }
+        }
+        cout << name << " does not exist in the list" << endl;
+        return false;
+    }
+
 
     //Constructor
     HashMap(int num) {
@@ -58,8 +84,8 @@ public:
 
 
 int main(){
-
-    HashMap hash(128);
+    int desiredSize = 128;
+    HashMap hash(desiredSize);
 
     ifstream file("/Users/madslun/Documents/Programmering/AlgDat/Oblig4/Del1/navn20.txt");
     string str;
@@ -72,5 +98,9 @@ int main(){
 
     hash.listAll();
 
-    cout << count;
+    hash.findName("Mads,Lundegaard");
+
+    hash.findName("Knut");
+
+    cout << "Lastfaktor: " << (double) count/desiredSize << endl;
 }
