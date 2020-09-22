@@ -4,7 +4,6 @@
 #include <list>
 using namespace std;
 
-static unsigned int A = 2654435769;
 
 class HashMap {
 
@@ -19,13 +18,7 @@ private:
         for(char i : name) {
             sum += sum * 7 + (i*7);
         }
-        return multHash(sum, 7);
-    }
-
-
-    unsigned long multHash(unsigned sum, int x){
-        const std::uint32_t knuth = 2654435769;
-        return sum * knuth >> (32-x);
+        return (unsigned)sum * (unsigned)2654435769 >> (32-7);
     }
 
 
