@@ -19,15 +19,15 @@ private:
         for(char i : name) {
             sum += sum * 7 + (i*7);
         }
-        //cout << "Hash: " << sum;
-
         return multHash(sum, 7);
     }
+
 
     unsigned long multHash(unsigned sum, int x){
         const std::uint32_t knuth = 2654435769;
         return sum * knuth >> (32-x);
     }
+
 
 public:
     //Inserts a new name in the list based on position returned from keygen
@@ -37,12 +37,11 @@ public:
             //Prints collision during insertion
             cout << "Collision on place " << pos << ". " << name << " will be put after " << hashTable[pos].back() << endl;
         }
-        //cout << " | Pos: " << pos << "| Name: " << name << endl;
         hashTable[pos].push_back(name);
     }
 
-
-    void listAll() {
+    //Prints all names in the list and returns number of collisions
+    int listAll() {
         //Count number of collisions
         int count = 0;
         //Loops through all places on list
@@ -58,10 +57,11 @@ public:
             }
             cout << endl;
         }
-        cout << "Number of collisions: " << count << endl;
+        return count;
     }
 
 
+    //Print if a name is found or not
     bool findName(string name) {
         unsigned long namePos = keyGen(name);
         for(string i : hashTable[namePos]) {
@@ -76,7 +76,7 @@ public:
 
 
     //Constructor
-    HashMap(int num) {
+    explicit HashMap(int num) {
         size = num;
         hashTable = new list<string>[size];
     }
@@ -87,20 +87,28 @@ int main(){
     int desiredSize = 128;
     HashMap hash(desiredSize);
 
-    ifstream file("/Users/madslun/Documents/Programmering/AlgDat/Oblig4/Del1/navn20.txt");
+    //Use this if compiling with g++
+    ifstream file("navn20.txt");
+
+    //Use this if compiling with Clion
+    //ifstream file("/Users/madslun/Documents/Programmering/AlgDat/Oblig4/Del1/navn20.txt");
+
+
     string str;
     int count = 1;
     while (std::getline(file, str)) {
         hash.insertName(str);
         count++;
-        //cout << str << "\n";
     }
 
-    hash.listAll();
+    int collisions = hash.listAll();
+    cout << "Number of collisions: " << collisions << endl;
 
     hash.findName("Mads,Lundegaard");
 
     hash.findName("Knut");
 
     cout << "Lastfaktor: " << (double) count/desiredSize << endl;
+
+    cout << "Collisions per name is: " << (double) collisions/count << endl;
 }
