@@ -14,28 +14,34 @@ private:
 
 
 private:
-    unsigned int keyGen(string name) {
-        unsigned long sum = 1;
+    unsigned long keyGen(string name) {
+        unsigned long sum = 0;
         for(char i : name) {
             sum += sum * 7 + (i*7);
         }
-        return hashGen(sum);
+        return sum % size;
+        //return sum * A >> (32 - 7);
     }
 
-
-    //Generate hash
-    unsigned int hashGen(unsigned long sum) {
-        return sum * A >> (32 - 7);
-    }
 
 public:
-
     void insertName(string name) {
-        int hash = keyGen(name);
-        cout << hash << "\n";
+        unsigned long hash = keyGen(name);
+        hashTable[hash].push_back(name);
     }
 
 
+    void listAll() {
+        //Loops through all places on list
+        for(int i = 0; i < size; i++) {
+            cout << "Place " << i << ":";
+            //Loops through if there are several names on same spot.
+            for(string j : hashTable[i]) {
+                cout << "--> " << j;
+            }
+            cout << endl;
+        }
+    }
 
     //Constructor
     HashMap(int num) {
@@ -48,14 +54,17 @@ public:
 int main(){
 
     HashMap hash(128);
-    hash.insertName("caro");
 
     ifstream file("/Users/madslun/Documents/Programmering/AlgDat/Oblig4/Del1/navn20.txt");
     string str;
     int count = 1;
     while (std::getline(file, str)) {
+        hash.insertName(str);
         count++;
-        cout << str << "\n";
+        //cout << str << "\n";
     }
+
+    hash.listAll();
+
     cout << count;
 }
