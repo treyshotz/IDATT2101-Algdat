@@ -3,7 +3,7 @@
 
 using namespace std;
 const int size = 10000000;
-const int pow2to24 = 16777216;
+const int pow2to24 = 16777216U;
 int randomArr[1000000];
 int *hashMap[pow2to24];
 int collisions = 0;
@@ -46,13 +46,13 @@ int main() {
     }
 
     //Take time here
-    chrono::steady_clock::time_point beginning =chrono::steady_clock::now();
+    chrono::steady_clock::time_point beginning = chrono::steady_clock::now();
 
     for(int i = 0; i < size; i++) {
         insertNum(&randomArr[i], hashMap);
     }
 
-    chrono::steady_clock::time_point end =chrono::steady_clock::now();
+    chrono::steady_clock::time_point end = chrono::steady_clock::now();
 
     cout << "Collisions: " << collisions << endl;
     cout << "Time used: " << chrono::duration_cast<chrono::milliseconds>(end - beginning).count() << "ms" << endl;
