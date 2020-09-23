@@ -83,6 +83,12 @@
 		<Unit filename="/Users/madslun/Documents/Programmering/AlgDat/Oblig4/Del2/main.cpp">
 			<Option target="Del2"/>
 		</Unit>
+		<Unit filename="/Users/madslun/Documents/Programmering/AlgDat/Oblig4/Del2/main2.cpp">
+			<Option target="Del2"/>
+		</Unit>
+		<Unit filename="/Users/madslun/Documents/Programmering/AlgDat/Oblig4/Del2/main2.h">
+			<Option target="Del2"/>
+		</Unit>
 		<Unit filename="/Users/madslun/Documents/Programmering/AlgDat/Oblig4/Del2/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

@@ -12,3 +12,19 @@ iostream
 random
 -
 
+/Users/madslun/Documents/Programmering/AlgDat/Oblig4/Del2/main2.cpp
+iostream
+-
+cstdint
+-
+climits
+-
+iostream
+-
+chrono
+-
+cmath
+-
+unordered_map
+-
+

@@ -1,7 +1,5 @@
 #include <iostream>
-#include <random>
-#define twoToTwentyFour 16777216U
-
+#include <chrono>
 
 using namespace std;
 
@@ -25,18 +23,18 @@ unsigned long hashTwo(int num) {
 
 
 unsigned long insertNum(int *randomNum, int *hashMap[]) {
-        long unsigned pos = hashOne(*randomNum);
+        unsigned long pos = hashOne(*randomNum);
         //cout << hashMap[pos] << endl;
         if(hashMap[pos] == NULL) {
             hashMap[pos] = randomNum;
         } else {
             collisions++;
             int jump = hashTwo(*randomNum);
-            pos = (pos+jump)%size;
+            pos = (pos+jump)%pow2to24;
             while(hashMap[pos] != NULL) {
                 collisions++;
                 //cout << collisions << endl;
-                pos = (pos+jump)%size;
+                pos = (pos+jump)%pow2to24;
             }
             hashMap[pos] = randomNum;
         }
@@ -53,10 +51,15 @@ int main() {
         randomArr[i] = (int) rand();
     }
 
+    chrono::steady_clock::time_point beginning =chrono::steady_clock::now();
+
     //Ta tid her
     for(int i = 0; i < size; i++) {
         insertNum(&randomArr[i], (hashMap));
-        cout << collisions << endl;
     }
-    cout << collisions << endl;
+
+    chrono::steady_clock::time_point end =chrono::steady_clock::now();
+
+    cout <<"Collisions: " << collisions << endl;
+    cout << "Time used = " << chrono::duration_cast<chrono::milliseconds>(end - beginning).count() << "ms" << endl;
 }
