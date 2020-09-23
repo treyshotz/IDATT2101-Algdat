@@ -44,7 +44,7 @@ unsigned insertNum(int *key, int length, int *hashTable[]){
     return index;
 }
 int normalArray[10000000];
-int *hashMap[twoToTwentyFour];
+int *hashmap[twoToTwentyFour];
 
 int main() {
 
@@ -59,7 +59,7 @@ int main() {
     }
     std::chrono::milliseconds start = std::chrono::duration_cast< std::chrono::milliseconds 	>(std::chrono::system_clock::now().time_since_epoch());
     for(int i = 0; i < 10000000; i++){
-        insertNum(&normalArray[i], twoToTwentyFour, hashMap);
+        insertNum(&normalArray[i], twoToTwentyFour, hashmap);
     }
     std::chrono::milliseconds end = std::chrono::duration_cast< std::chrono::milliseconds 	>(std::chrono::system_clock::now().time_since_epoch());
 

@@ -2,14 +2,11 @@
 #include <chrono>
 
 using namespace std;
-
-    const int size = 10000000;
-    const int pow2to24 = 16777216;
-    const unsigned int A = 2654435769;
-    int randomArr[1000000];
-    int *hashMap[pow2to24];
-//int hashmap[pow2to24];
-    int collisions = 0;
+const int size = 10000000;
+const int pow2to24 = 16777216;
+int randomArr[1000000];
+int *hashMap[pow2to24];
+int collisions = 0;
 
 
 unsigned long hashOne(int num) {
@@ -22,25 +19,22 @@ unsigned long hashTwo(int num) {
 }
 
 
-unsigned long insertNum(int *randomNum, int *hashMap[]) {
+unsigned insertNum(int *randomNum, int *hashmap[]) {
         unsigned long pos = hashOne(*randomNum);
-        //cout << hashMap[pos] << endl;
-        if(hashMap[pos] == NULL) {
-            hashMap[pos] = randomNum;
+        if(hashmap[pos] == nullptr) {
+            hashmap[pos] = randomNum;
         } else {
             collisions++;
             int jump = hashTwo(*randomNum);
             pos = (pos+jump)%pow2to24;
-            while(hashMap[pos] != NULL) {
+            while(hashmap[pos] != NULL) {
                 collisions++;
-                //cout << collisions << endl;
                 pos = (pos+jump)%pow2to24;
             }
-            hashMap[pos] = randomNum;
+            hashmap[pos] = randomNum;
         }
         return 1;
-    }
-
+}
 
 
 int main() {
@@ -51,15 +45,17 @@ int main() {
         randomArr[i] = (int) rand();
     }
 
+    //Take time here
     chrono::steady_clock::time_point beginning =chrono::steady_clock::now();
 
-    //Ta tid her
     for(int i = 0; i < size; i++) {
-        insertNum(&randomArr[i], (hashMap));
+        insertNum(&randomArr[i], hashMap);
     }
 
     chrono::steady_clock::time_point end =chrono::steady_clock::now();
 
-    cout <<"Collisions: " << collisions << endl;
-    cout << "Time used = " << chrono::duration_cast<chrono::milliseconds>(end - beginning).count() << "ms" << endl;
+    cout << "Collisions: " << collisions << endl;
+    cout << "Time used: " << chrono::duration_cast<chrono::milliseconds>(end - beginning).count() << "ms" << endl;
+    cout << "Load: " << (double) size/pow2to24 << endl;
+    cout << "Collisions per element: " << (double) collisions/size << endl;
 }
