@@ -1,5 +1,6 @@
 #include <iostream>
 #include <chrono>
+#include <map>
 
 using namespace std;
 const int size = 10000000;
@@ -58,4 +59,16 @@ int main() {
     cout << "Time used: " << chrono::duration_cast<chrono::milliseconds>(end - beginning).count() << "ms" << endl;
     cout << "Load: " << (double) size/pow2to24 << endl;
     cout << "Collisions per element: " << (double) collisions/size << endl;
+
+    map<int, int> map;
+
+    chrono::steady_clock::time_point beginning2 = chrono::steady_clock::now();
+
+    for(int i = 0; i < size; i++) {
+        map[randomArr[i]] = randomArr[i];
+    }
+    chrono::steady_clock::time_point end2 = chrono::steady_clock::now();
+
+    cout << "Time used for c++ hashmap: " << chrono::duration_cast<chrono::milliseconds>(end2-beginning2).count() << "ms" << endl;
+
 }
