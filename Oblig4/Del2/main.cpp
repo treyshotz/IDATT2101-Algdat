@@ -5,11 +5,11 @@
 using namespace std;
 const int size = 10000000;
 const int pow2to24 = 16777216U;
-int randomArr[10000000];
+int randomArr[size];
 int *hashMap[pow2to24];
 int collisions = 0;
 
-
+//Generates first hash
 unsigned long hashOne(int num) {
     return (unsigned)num * (unsigned)2654435769 >> (32-24);
 }
