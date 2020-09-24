@@ -5,7 +5,7 @@
 using namespace std;
 const int size = 10000000;
 const int pow2to24 = 16777216U;
-int randomArr[1000000];
+int randomArr[10000000];
 int *hashMap[pow2to24];
 int collisions = 0;
 
