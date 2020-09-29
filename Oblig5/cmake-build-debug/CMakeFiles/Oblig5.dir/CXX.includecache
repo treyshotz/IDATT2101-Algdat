@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/madslun/Documents/Programmering/AlgDat/Oblig5/main.cpp
+iostream
+-
+list
+-
+fstream
+-
+sstream
+-
+
