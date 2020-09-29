@@ -60,9 +60,12 @@ public:
     /*
      * Runs a recursive DFS search on graph.
      * Uses iterator to go through graph/node-array
+     * Since this is the last used DFS this prints
+     * out nodes during runtime to show SCC
      */
     void DFS(int pos, bool visited[]) {
         visited[pos] = true;
+        cout << pos << " ";
 
         list<int>::iterator i;
         for(i = nodeArr[pos].begin(); i != nodeArr[pos].end(); i++) {
@@ -72,10 +75,59 @@ public:
         }
     }
 
+    /*
+     * Same as DFS but this also fills the stack
+     */
+    void stackFill(int pos, bool visited[], stack<int> &stack) {
+        visited[pos] = true;
 
+        list<int>::iterator i;
+        for(i = nodeArr[pos].begin(); i != nodeArr[pos].end(); i++) {
+            if(!visited[*i]) {
+                stackFill(*i, visited, stack);
+            }
+        }
+        //Add the node to the stack. Only difference from DFS method....
+        stack.push(pos);
+    }
+
+    /**
+     * Finds SCC based on Kosaraju's algorithm which includes
+     * DFS search, traversing and then DFS again.
+     */
+    void findStronglyConnected() {
+        stack<int> Stack;
+
+        bool *visited = new bool[nodeNum];
+        for(int i = 0; i < nodeNum; i++) {
+            visited[i] = false;
+        }
+
+        //Uses stackfill DFS to add nodes to stack
+        for(int i = 0; i < nodeNum; i++) {
+            if(!visited[i]) {
+                stackFill(i, visited, Stack);
+            }
+        }
+
+        Graph transposedGraph = getTranspose();
+
+        for(int i = 0; i < nodeNum; i++) {
+            visited[i] = false;
+        }
+
+        while(!Stack.empty()) {
+            int pos = Stack.top();
+            if(!visited[pos]) {
+                transposedGraph.DFS(pos, visited);
+                //To make a new line after DFS have printed nodes
+                cout << endl;
+            }
+            Stack.pop();
+        }
+
+    }
 };
-
-
 
 
 int main() {
@@ -100,7 +152,9 @@ int main() {
         graph.addNode(pos, neighbour);
     }
 
-    graph.listAll();
+    //graph.listAll();
+
+    graph.findStronglyConnected();
 
     return 0;
 }
