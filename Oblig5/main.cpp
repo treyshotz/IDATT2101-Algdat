@@ -47,10 +47,9 @@ public:
      */
     Graph getTranspose() {
         Graph transposedGraph(nodeNum);
-
         for(int i = 0; i < nodeNum; i++) {
             list<int>::iterator j;
-            for(j = nodeArr[i].begin(); j != nodeArr[i].end(); i++) {
+            for(j = nodeArr[i].begin(); j != nodeArr[i].end(); j++) {
                 transposedGraph.nodeArr[*j].push_back(i);
             }
         }
@@ -116,14 +115,17 @@ public:
             visited[i] = false;
         }
 
+        int count = 1;
         while(!Stack.empty()) {
             int pos = Stack.top();
             if(!visited[pos]) {
+                cout << "SCC " << count << ": ";
                 transposedGraph.DFS(pos, visited);
                 //To make a new line after DFS have printed nodes
                 cout << endl;
             }
             Stack.pop();
+            count++;
         }
 
     }
@@ -135,7 +137,7 @@ int main() {
     int size;
     int edges;
     string str;
-    ifstream file("/Users/madslun/Documents/Programmering/AlgDat/Oblig5/L7g6.txt");
+    ifstream file("/Users/madslun/Documents/Programmering/AlgDat/Oblig5/L7Skandinavia.txt");
         getline(file, str);
     istringstream iss(str);
     iss >> size;
