@@ -120,12 +120,12 @@ public:
             int pos = Stack.top();
             if(!visited[pos]) {
                 cout << "SCC " << count << ": ";
+                count++;
                 transposedGraph.DFS(pos, visited);
                 //To make a new line after DFS have printed nodes
                 cout << endl;
             }
             Stack.pop();
-            count++;
         }
 
     }
@@ -137,7 +137,7 @@ int main() {
     int size;
     int edges;
     string str;
-    ifstream file("/Users/madslun/Documents/Programmering/AlgDat/Oblig5/L7Skandinavia.txt");
+    ifstream file("/Users/madslun/Documents/Programmering/AlgDat/Oblig5/L7g6.txt");
         getline(file, str);
     istringstream iss(str);
     iss >> size;
