@@ -21,9 +21,9 @@ public:
     }
 
     /*
-     * Adds node to linked list by pushing the new node at the back
+     * Adds edge to linked list by pushing the new node at the back
      */
-    void addNode(int pos, int neighbour) {
+    void addEdge(int pos, int neighbour) {
         nodeArr[pos].push_back(neighbour);
     }
 
@@ -92,7 +92,7 @@ public:
 
     /**
      * Finds SCC based on Kosaraju's algorithm which includes
-     * DFS search, traversing and then DFS again.
+     * DFS, traversing and then DFS again.
      */
     void findStronglyConnected() {
         stack<int> Stack;
@@ -134,10 +134,12 @@ public:
 
 int main() {
 
+    //Setting opp nodes and edges
     int size;
     int edges;
     string str;
-    ifstream file("/Users/madslun/Documents/Programmering/AlgDat/Oblig5/L7g6.txt");
+    //Clion needs absolute path to read from file...
+    ifstream file("/Users/madslun/Documents/Programmering/AlgDat/Oblig5/L7Skandinavia.txt");
         getline(file, str);
     istringstream iss(str);
     iss >> size;
@@ -151,7 +153,7 @@ int main() {
         istringstream iss2(str);
         iss2 >> pos;
         iss2 >> neighbour;
-        graph.addNode(pos, neighbour);
+        graph.addEdge(pos, neighbour);
     }
 
     //graph.listAll();
