@@ -1,0 +1,9 @@
+
+X	java:S125"<This block of commented-out lines of code should be removed.(Â­Ö€8‚Í¹İÒ.
+X	java:S125)"<This block of commented-out lines of code should be removed.(³Á«ä8ì©Ó€Ô.
+U	java:S106"9Replace this use of System.out or System.err by a logger.(Ì”«¨8áïë€Ô.
+H
+java:S1481""&Remove this unused "b" local variable.(â¿®Çøÿÿÿÿ8¸şØ€Ô.
+W
+java:S1854""5Remove this useless assignment to local variable "b".(â¿®Çøÿÿÿÿ8¸şØ€Ô.
+D	java:S108")Either remove or fill this block of code.(ôÍÏ8±“ğ€Ô.
