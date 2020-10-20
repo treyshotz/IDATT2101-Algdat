@@ -27,12 +27,14 @@ public class Compression {
 	
 	public static void main(String[] args) throws IOException {
 		
-		DataInputStream inputFile = new DataInputStream(new BufferedInputStream(new FileInputStream("diverse.txt")));
+		DataInputStream inputFile = new DataInputStream(new BufferedInputStream(new FileInputStream("d.txt")));
 		DataOutputStream outputFile = new DataOutputStream(new BufferedOutputStream(new FileOutputStream("test.txt")));
 		
 		Compression c = new Compression(inputFile, outputFile);
 		byte[] b = c.readDataToBytes();
-		
+		char C = 'c';
+		outputFile.write(C);
+		System.out.println(C);
 		
 		c.compress();
 		

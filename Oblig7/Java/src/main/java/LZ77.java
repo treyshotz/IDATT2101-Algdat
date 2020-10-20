@@ -1,11 +1,13 @@
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.Arrays;
 
 public class LZ77 {
 	private static int BUFFERSIZE = (1 << 12) - 1; //12 bits for looking back
 	private static int POINTERSIZE = ((1 << 4) - 1); //4 bits for match size
 	private int buffersize;
-	private char[] data;
+	private byte[] data;
 	
 	DataInputStream compressionInput;
 	DataOutputStream compressionOutput;
@@ -17,7 +19,9 @@ public class LZ77 {
 		this.compressionInput = new DataInputStream(new BufferedInputStream(new FileInputStream(path)));
 		this.compressionOutput = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(path+"compressed")));
 		this.deCompressionInput = null;
-		this.deCompressionOutput = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(path+"decompressed")));
+		this.deCompressionOutput = null;
+		//this.deCompressionInput = new DataInputStream(new BufferedInputStream(new FileInputStream(path+"compressed")));
+		//this.deCompressionOutput = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(path+"decompressed")));
 	}
 	
 	/**
@@ -33,26 +37,24 @@ public class LZ77 {
 	 * @throws IOException
 	 */
 	public void compress() throws IOException {
-		if (this.compressionInput == null) System.out.println("fack input");
-		if (this.compressionOutput == null) System.out.println("fack output");
-		data = new char[this.compressionInput.available()];
-		String text = new String(this.compressionInput.readAllBytes(), "UTF-8");
-		data = text.toCharArray();
-		for (char c:data ){
-			System.out.print(c);
+		if (this.compressionInput == null) throw new NullPointerException("Error with input file");
+		if (this.compressionOutput == null) throw new NullPointerException("Error with output file");
+		data = new byte[this.compressionInput.available()];
+		
+		data = this.compressionInput.readAllBytes();
+		for (byte b : data ){
+			System.out.print(b);
 		}
+		
 		for (int i = 0; i < data.length;){
 			Pointer pointer = findPointer(i);
 			if (pointer != null){
 				this.compressionOutput.write(1);
-				System.out.println("FUNK A");
-				this.compressionOutput.write(pointer.getDistance());
-				this.compressionOutput.write(pointer.getLength());
-				//System.out.println(1 + "" + pointer.getDistance() +"" +pointer.getLength());
+				this.compressionOutput.write((byte)pointer.getDistance() >> 4);
+				this.compressionOutput.write((byte) pointer.getDistance() & 0x0F << 4 | pointer.getLength());
 				i = i + pointer.getLength();
 			} else {
 				this.compressionOutput.write(0);
-				System.out.println("FUNK B");
 				this.compressionOutput.write(data[i]);
 				i = i+1;
 			}
@@ -63,17 +65,22 @@ public class LZ77 {
 	}
 	
 	private Pointer findPointer(int currentIndex){
+		if (currentIndex == 0)
+			return null;
+		
 		Pointer pointer = new Pointer();
 		int stop = currentIndex + POINTERSIZE;
 		if (stop > data.length -1) stop = data.length - 1;
-		for (int j = currentIndex + 2; j < stop; j++){
-			int start = currentIndex - buffersize;
-			if (start < 0) start = 0;
-			char[] chars = Arrays.copyOfRange(data, currentIndex, j);
-			for (int i = start; i < currentIndex; i++){
-				int repeat = chars.length / (currentIndex - i);
-				int remaining = chars.length % (currentIndex - i);
-				char[] tempArray = new char[(currentIndex - i) * repeat + (i + remaining - i)];
+		for (int j = stop; j > currentIndex + 3; j--){
+			int min = currentIndex - buffersize;
+			if (min < 0)
+				min = 0;
+			byte[] bytes = Arrays.copyOfRange(data, currentIndex, j);
+			
+			for (int i = min; i < currentIndex; i++){
+				int repeat = bytes.length / (currentIndex - i);
+				int remaining = bytes.length % (currentIndex - i);
+				byte[] tempArray = new byte[(currentIndex - i) * repeat + (i + remaining - i)];
 				int m = 0;
 				for (; m < repeat; m++) {
 					int pos = m * (currentIndex - i);
@@ -81,8 +88,8 @@ public class LZ77 {
 				}
 				int pos = m * (currentIndex - i);
 				System.arraycopy(data, i, tempArray, pos, remaining);
-				if (Arrays.equals(tempArray, chars) && chars.length > pointer.getLength()){
-					pointer.setLength(chars.length);
+				if (Arrays.equals(tempArray, bytes) && bytes.length > pointer.getLength()){
+					pointer.setLength(bytes.length);
 					pointer.setDistance(currentIndex - i);
 				}
 			}
@@ -94,10 +101,37 @@ public class LZ77 {
 	}
 	
 	public void deCompress(String path) throws IOException {
-		//inputStream = new BufferedInputStream(new FileInputStream(path));
-		//outputStream = new BufferedOutputStream(new FileOutputStream(path+"decompress"));
+		this.deCompressionInput = new DataInputStream(new BufferedInputStream(new FileInputStream(path)));
+		//outputStream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(path+"decompress")));
+		ByteBuffer byteBuffer = ByteBuffer.allocate(1);
+		RandomAccessFile outputFileStream;
+		FileChannel outChannel;
 		do {
-			int flag = compressionInput.read();
+			outputFileStream = new RandomAccessFile(path+"dec", "rw");
+			outChannel = outputFileStream.getChannel();
+			int condition = this.deCompressionInput.read();
+			if (condition == 0) {
+				byteBuffer.clear();
+				byteBuffer.put(this.deCompressionInput.readByte());
+				byteBuffer.flip();
+				outChannel.write(byteBuffer, outChannel.size());
+				outChannel.position(outChannel.size());
+			} else {
+				byte b1 = this.deCompressionInput.readByte();
+				byte b2 = this.deCompressionInput.readByte();
+				int dis = (b1 << 4) | (b2 >> 4);
+				int len = (b2 & 0x0f);
+				for (int i = 0; i < len; i++) {
+					byteBuffer.clear();
+					outChannel.read(byteBuffer, outChannel.position() - dis);
+					byteBuffer.flip();
+					outChannel.write(byteBuffer, outChannel.size());
+					outChannel.position(outChannel.size());
+				}
+			}
+			outputFileStream.close();
+			outChannel.close();
+			this.deCompressionInput.close();
 		} while (true);
 	}
 	
@@ -111,10 +145,10 @@ public class LZ77 {
 	}
 }
 
+
 class Pointer {
 	private int length;
 	private int distance;
-	
 	
 	public Pointer() {
 		this(-1,-1);
