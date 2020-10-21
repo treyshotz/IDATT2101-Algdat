@@ -42,10 +42,6 @@ public class LZ772 {
         
         String text = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8); //we read all the bytes from the input stream into a string
         data = text.toCharArray(); //we convert it to a character array
-        System.out.println("\n--< Before compression >--");
-        for (char c : data ){
-            System.out.print((byte)c + " "); //we print all the bytes from array
-        }
         
         StringBuilder incompressible = new StringBuilder(); //creating a string builder as to more easily handle all characters
         for (int i = 0; i < data.length;){ //for the entire length of all characters
@@ -75,7 +71,7 @@ public class LZ772 {
         inputStream.close();
         outputStream.flush();
         outputStream.close();
-        printAfter(path);
+        //printAfter(path);
         deCompress(path); //then decompress
     }
     
@@ -136,36 +132,46 @@ public class LZ772 {
         return null; //If it was not a match
     }
     
+    /**
+     * Decompresses the file based on our compressing algorithm
+     *
+     * The start of every file is started by having a pointer which controlles how many bytes is supposed to be uncompressed
+     * After this we are redirected to a new pointer. This pointer is a negative, indicating how many steps we should jump back and what length we are using
+     * This keeps on going with pointers indicating either compressed or uncrompressed bytes until the file is run through
+     *
+     * @param path to files
+     * @throws IOException
+     */
     public void deCompress(String path) throws IOException {
         inputStream = new DataInputStream(new BufferedInputStream(new FileInputStream(path+"compress")));
         outputStream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(path+"decompress")));
         int nrOfBytes = inputStream.available();
-        byte[] bytes = new byte[nrOfBytes];
+        byte[] bytes = new byte[nrOfBytes]; //Array of bytes from the compressed file
         inputStream.readFully(bytes);
         int last = 0;
-        List<Byte> b = new ArrayList<>();
+        List<Byte> bytesArr = new ArrayList<>(); //Arraylist containing the bytes that will be the result of decompression
         
-        int index = 0;
+        int index = 0; //Index to keep track of where in the compressed file we are
         while (index < bytes.length){
-            int jump = bytes[index];
-            if (jump >= 0){
+            int jump = bytes[index]; //Indicates how long the sequence will be
+            if (jump >= 0){ //Checks if is uncompressed bytes
                 for (int unCompPos = 0; unCompPos < jump; unCompPos++) {
-                    b.add(last + unCompPos, bytes[index + unCompPos + 1]);
+                    bytesArr.add(last + unCompPos, bytes[index + unCompPos + 1]); //Adds all the uncompressed bytes to the array
                 }
-                index += jump + 1;
-                last += jump;
+                index += jump + 1; //Updates the index to the next pointer
+                last += jump; //Updates where the previous position was
             }
-            else {
-                int length = bytes[index+1];
-                for (int compPos = 0; compPos < length; compPos++){
-                    b.add(last + compPos, b.get(last + jump + compPos));
+            else { //Handles compressed data
+                int backJump = bytes[index+1]; //Indicates how long backwards the jump will be
+                for (int compPos = 0; compPos < backJump; compPos++){
+                    bytesArr.add(last + compPos, bytesArr.get(last + jump + compPos)); //Adds the compressed data based on the previously uncompressed data
                 }
-                index += 2;
-                last += length;
+                index += 2; //Updates index to the next pointer
+                last += backJump; //Updates where the previous position was
             }
         }
-        for(int i = 0; i < b.size()-1; i++) {
-            outputStream.write(b.get(i));
+        for(int i = 0; i < bytesArr.size()-1; i++) {
+            outputStream.write(bytesArr.get(i)); //Writes all the bytes to the decompressed file
         }
         outputStream.write('\n');
         outputStream.flush();
@@ -226,5 +232,6 @@ public class LZ772 {
         String inpath = "/Users/madslun/Documents/Programmering/AlgDat/Oblig7/Java/d.txt";
         LZ772 lz772 = new LZ772();
         lz772.compress(inpath);
+        System.out.println("Compression and Decompression finished successfully!");
     }
 }
