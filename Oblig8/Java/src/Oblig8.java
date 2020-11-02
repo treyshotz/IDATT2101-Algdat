@@ -1,0 +1,2 @@
+public class Oblig8 {
+}
