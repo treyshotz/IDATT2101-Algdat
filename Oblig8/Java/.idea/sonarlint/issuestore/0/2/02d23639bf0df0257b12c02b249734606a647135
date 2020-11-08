@@ -1,0 +1,62 @@
+
+f
+java:S2095Š"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(ş²Âï8¾£ğïÙ.
+C
+java:S1659="!Declare "end" on a separate line.(ÖæÔ¤ùÿÿÿÿ8«»€Ù.
+U
+java:S1135ˆ"2Complete the task associated to this TODO comment.(Ğ…Ûåøÿÿÿÿ8¾£ğïÙ.
+V	java:S106ï"9Replace this use of System.out or System.err by a logger.(‡´Í8ÎË¨îÙ.
+C
+java:S1659S"!Declare "end" on a separate line.(ÖæÔ¤ùÿÿÿÿ8ÖÆ³äÙ.
+o
+java:S2677â"LUse or store the value returned from "readLine" instead of throwing it away.(Òï´åıÿÿÿÿ8¾£ğïÙ.
+[	java:S106ğ"9Replace this use of System.out or System.err by a logger.(å’®ûúÿÿÿÿ8Šç´îÙ.
+o
+java:S2677ñ"LUse or store the value returned from "readLine" instead of throwing it away.(Òï´åıÿÿÿÿ8¾£ğïÙ.
+[	java:S106¥"9Replace this use of System.out or System.err by a logger.(ê‹èêÿÿÿÿÿ8ÉÜ¹ÿØ.
+{
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(çâîÀıÿÿÿÿ8›º¹æÙ.
+d
+java:S1075Ç"ARefactor your code to get this URI from a customizable parameter.(´™úıÿÿÿÿ8±«ÃôØ.
+
+java:S1319²"pThe type of the "nodes" object should be an interface such as "List" rather than the implementation "ArrayList".(½¯‚8¾£ğïÙ.
+C
+java:S1659 "!Declare "end" on a separate line.(£†Ø¿şÿÿÿÿ8›º¹æÙ.
+{
+java:S2293<"YReplace the type specification in this constructor call with the diamond operator ("<>").(çâîÀıÿÿÿÿ8«»€Ù.
+[	java:S106¤"9Replace this use of System.out or System.err by a logger.(å’®ûúÿÿÿÿ8íõ÷úØ.
+E
+java:S1659 "#Declare "count" on a separate line.(£†Ø¿şÿÿÿÿ8›º¹æÙ.
+
+java:S1319®"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ëƒ§¾8¾£ğïÙ.
+{
+java:S2293R"YReplace the type specification in this constructor call with the diamond operator ("<>").(çâîÀıÿÿÿÿ8Å²äÙ.
+V	java:S106£"9Replace this use of System.out or System.err by a logger.(şÙ‹8–‚ïúØ.
+_
+java:S1075É"ARefactor your code to get this URI from a customizable parameter.(ËÑûŞ8¾£ğïÙ.
+[	java:S106í"9Replace this use of System.out or System.err by a logger.(‹óäÄşÿÿÿÿ8¾£ğïÙ.
+[	java:S106ò"9Replace this use of System.out or System.err by a logger.(©øù üÿÿÿÿ8¾£ğïÙ.
+_
+java:S1075È"ARefactor your code to get this URI from a customizable parameter.(÷ˆ•¸8À…ÄôØ.
+f
+java:S2095 "HUse try-with-resources or close this "FileWriter" in a "finally" clause.(íÓ‚¿8¾£ğïÙ.
+[	java:S106ñ"9Replace this use of System.out or System.err by a logger.(ê‹èêÿÿÿÿÿ8í§µîÙ.
+k
+java:S2095í"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(ú¾ğÆüÿÿÿÿ8¾£ğïÙ.
+[	java:S106ì"9Replace this use of System.out or System.err by a logger.(‡Ÿ›«ûÿÿÿÿ8¾£ğïÙ.
+j
+java:S2095ğ"LUse try-with-resources or close this "BufferedReader" in a "finally" clause.(üİü¯8¾£ğïÙ.
+j
+java:S2095à"LUse try-with-resources or close this "BufferedReader" in a "finally" clause.(¶¾ï’8¾£ğïÙ.
+[	java:S106¦"9Replace this use of System.out or System.err by a logger.(©øù üÿÿÿÿ8¾£ğïÙ.
+^	java:S125„"<This block of commented-out lines of code should be removed.(Ïîÿ±şÿÿÿÿ8¾£ğïÙ.
+V	java:S106‰"9Replace this use of System.out or System.err by a logger.(Áà™¥8¾£ğïÙ.
+j
+java:S2095Î"LUse try-with-resources or close this "BufferedReader" in a "finally" clause.(Ä§ì8¾£ğïÙ.
+V	java:S106¡"9Replace this use of System.out or System.err by a logger.(Íâÿ‹8œÉÔ€Ù.
+V	java:S106î"9Replace this use of System.out or System.err by a logger.(ó€ã³8ŒĞ¯îÙ.
+[	java:S106ù"9Replace this use of System.out or System.err by a logger.(ºŒÁ şÿÿÿÿ8¾£ğïÙ.
+
+java:S1319"pThe type of the "nodes" object should be an interface such as "List" rather than the implementation "ArrayList".(ËˆŸõ8‹¡ìØ.
+V	java:S106¢"9Replace this use of System.out or System.err by a logger.(ó€ã³8ÜÉ€ûØ.
+[	java:S106İ"9Replace this use of System.out or System.err by a logger.(ä„ˆºüÿÿÿÿ8¾£ğïÙ.
