@@ -472,8 +472,8 @@ public class Graph {
 		//Nordkapp = 1914291
 		
 		
-		int start = 6225195;
-		int end = 6013683;
+		int start = 477934;
+		int end = 1914291;
 		int pointPlace = 1117256;
 		int pointType = 2;
 		g.dijkstraRun(start, end);
@@ -481,6 +481,7 @@ public class Graph {
 		g.dijkstraRunPoints(pointPlace, pointType);
 		g.resetNodes();
 		g.runAstar(start, end);
+		g.resetNodes();
 		g.runAstarPoints(pointPlace, pointType);
 		
 		//I think this could be an easier way of doing it instead of having so many classes and objects. Should try if I have the time
