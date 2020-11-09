@@ -3,6 +3,7 @@ public class Node {
 	private double latitude;
 	private double longitude;
 	private boolean finished;
+	private double cosWidth;
 	private int type;
 	private Edge edge;
 	private Last prev;
@@ -77,6 +78,14 @@ public class Node {
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public double getCosWidth() {
+		return cosWidth;
+	}
+	
+	public void setCosWidth(double cosWidth) {
+		this.cosWidth = cosWidth;
 	}
 	
 	@Override

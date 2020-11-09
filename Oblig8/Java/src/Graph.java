@@ -178,10 +178,10 @@ public class Graph {
 		double sin_width = Math.sin((n1.getLatitude() - n2.getLatitude()) / 2.0);
 		double sin_length = Math.sin((n1.getLongitude() - n2.getLongitude()) / 2.0);
 		//TODO: This will make the runtime a bit longer... Consider doing this in the insertMethod
-		double cos_width1 = Math.cos(n1.getLatitude());
-		double cos_width2 = Math.cos(n2.getLatitude());
+		//double cos_width1 = Math.cos(n1.getLatitude());
+		//double cos_width2 = Math.cos(n2.getLatitude());
 		return (int) (35285538.46153846153846153846 * Math.asin(Math.sqrt(
-				sin_width * sin_width + cos_width1 * cos_width2 * sin_length * sin_length)));
+				sin_width * sin_width + n1.getCosWidth() * n1.getCosWidth() * sin_length * sin_length)));
 	}
 	
 	
@@ -258,6 +258,7 @@ public class Graph {
 		for (Node n : nodes) {
 			n.setLatitude(n.getLatitude() * (180 / Math.PI));
 			n.setLongitude(n.getLongitude() * (180 / Math.PI));
+			n.setCosWidth(Math.cos(n.getLatitude()));
 		}
 	}
 	
